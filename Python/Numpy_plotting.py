@@ -22,6 +22,23 @@ randomY = math.ceil(randomY)
 
 matrix[randomX][randomY] = 1
 
+def randomCornerStart():
+    decider = random.randint(0,3)
+
+    if decider == 0:
+        randomX = 2
+        randomY = 2
+    elif decider == 1:
+        randomX = 2
+        randomY = inputsize - 1
+    elif decider == 2:
+        randomX = inputsize - 1
+        randomY = 2
+    elif decider == 3:
+        randomX = inputsize - 1
+        randomY = inputsize - 1
+
+    return randomX,randomY
     # mark a border 
     for i in range(inputsize - 1):
         matrix[0][i] = 2
