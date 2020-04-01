@@ -1,10 +1,6 @@
 
-from matplotlib import colors 
-from pygifsicle import optimize
 import numpy as np 
 import matplotlib.pyplot as plt
-import random
-import math
 import imageio
 import json
 import sys
