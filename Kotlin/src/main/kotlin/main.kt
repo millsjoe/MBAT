@@ -7,4 +7,6 @@ fun main(args: Array<String>) {
     val counter = args[1].toInt()
     val gson = Gson()
     val array = Array(arraySize) { IntArray(arraySize) }
+    Surface(array)
+    val initial = Cell(array).randomCell()
 }
