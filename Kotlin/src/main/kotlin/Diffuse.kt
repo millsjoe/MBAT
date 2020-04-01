@@ -1,7 +1,16 @@
+@Suppress("NAME_SHADOWING")
 class Diffuse(private val surface: Array<IntArray>, initialCell: Pair<Int,Int>, counterLimit: Int) {
 
     private val cellClass = Cell(surface)
     private val counterLimit = counterLimit
+    var finalArray: ArrayList<Array<IntArray>> = arrayListOf()
+    init {
+        diffuse(initialCell, 0)
+    }
+
+    override fun toString(): String {
+        return surface.contentDeepToString()
+    }
 
     private fun checkNeighbours(location: Pair<Int,Int>): Pair<Boolean, Boolean> {
         var nextToNeighbour = false
@@ -47,3 +56,39 @@ class Diffuse(private val surface: Array<IntArray>, initialCell: Pair<Int,Int>, 
         }
         return Pair(newX,newY)
     }
+
+    private fun diffuse(location: Pair<Int, Int>, counter: Int) {
+        var counter = counter
+        counter++
+
+
+        if (counter > counterLimit) return
+        var location = location
+        var neighbours = checkNeighbours(location)
+        var cellDiffused = neighbours.first
+        var tooCloseToEdge = neighbours.second
+
+        while( !cellDiffused ) {
+            if (tooCloseToEdge) {
+                location = cellClass.randomCell()
+            }
+            location = randomlyMove(location)
+
+            neighbours = checkNeighbours(location)
+            cellDiffused = neighbours.first
+            tooCloseToEdge = neighbours.second
+
+        }
+
+        val newArray: Array<IntArray> = surface.deepCopyIt()
+        finalArray.add(newArray)
+        surface[location.first][location.second] = 1
+
+        diffuse(cellClass.randomCell(), counter)
+
+    }
+
+    private fun Array<IntArray>.deepCopyIt() = Array(size) { get(it).clone() }
+
+
+}

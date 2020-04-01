@@ -9,4 +9,10 @@ fun main(args: Array<String>) {
     val array = Array(arraySize) { IntArray(arraySize) }
     Surface(array)
     val initial = Cell(array).randomCell()
+    val playingBoard = Diffuse(array,initial,counter)
+
+    val theArray: String = gson.toJson(Model(playingBoard.finalArray))
+
+
+    File("../Python/Kotlin.json").writeText((theArray))
 }
