@@ -112,7 +112,10 @@ void initialiseStartingCell( int arrayBoard[SIZE][SIZE]){
     arrayBoard[startingPoint][startingPoint] = 1;
 }
 
-bool diffuse(int x, int y, int arrayBoard[SIZE][SIZE]){
+bool diffuse(int x, int y, int arrayBoard[SIZE][SIZE], int count ){
+        if (count > 50000){
+            return false;
+        }
         if (checkDiffused(arrayBoard,x,y)){
             arrayBoard[x][y] = 1;
             return true;
@@ -143,7 +146,8 @@ bool diffuse(int x, int y, int arrayBoard[SIZE][SIZE]){
                     break;
             }
         }
-        diffuse(x, y, arrayBoard);
+        count++;
+        diffuse(x, y, arrayBoard, count);
 
     }
 
@@ -172,7 +176,7 @@ int main(int argc, char* argv[]) {
     initialiseStartingCell(arrayBoard);
     int i = 0;
     while(i < count){
-        if (diffuse(x, y, arrayBoard)){
+        if (diffuse(x, y, arrayBoard,0)){
             i++;
         }
     }
