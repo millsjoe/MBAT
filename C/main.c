@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 int SIZE;
 void checkArray(int arrayBoard[SIZE][SIZE]) {
     for (int i = 0; i < SIZE; i++) {
@@ -21,6 +22,33 @@ void checkArray(int arrayBoard[SIZE][SIZE]) {
         }
     }
 }
+bool checkBorder(int arrayBoard[SIZE][SIZE], int locationX, int locationY){
+
+    bool toReturn = false;
+    if (arrayBoard[locationX][locationY + 1] == 2 ||
+        arrayBoard[locationX][locationY - 1] == 2 ||
+        arrayBoard[locationX + 1][locationY] == 2 ||
+        arrayBoard[locationX - 1][locationY] == 2){
+        toReturn = true;
+    }
+    if(arrayBoard[locationX][locationY] == 1)
+        toReturn = true;
+
+    return toReturn;
+}
+
+bool checkDiffused(int arrayBoard[SIZE][SIZE], int locationX, int locationY){
+
+    bool toReturn = false;
+    if (arrayBoard[locationX][locationY + 1] == 1 ||
+        arrayBoard[locationX][locationY - 1] == 1 ||
+        arrayBoard[locationX + 1][locationY] == 1 ||
+        arrayBoard[locationX - 1][locationY] == 1){
+        toReturn = true;
+    }
+
+    return toReturn;
+}
 void createBorder(int arrayBoard[SIZE][SIZE]){
 
 
@@ -31,6 +59,12 @@ void createBorder(int arrayBoard[SIZE][SIZE]){
         arrayBoard[i][SIZE -1]= 2;
     }
 
+}
+void initialiseStartingCell( int arrayBoard[SIZE][SIZE]){
+    float middle = SIZE/2;
+    int startingPoint = (int)middle - 1 ;
+
+    arrayBoard[startingPoint][startingPoint] = 1;
 }
 int main(int argc, char* argv[]) {
 
