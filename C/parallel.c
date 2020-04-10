@@ -179,12 +179,6 @@ int main(int argc, char* argv[]) {
     
 
     initialiseStartingCell(arrayBoard);
-    // int i = 0;
-    // while(i < count){
-    //     if (diffuse(x, y, arrayBoard,0)){
-    //         i++;
-    //     }
-    // }
     int tid;
     #pragma omp parallel for private(x, y, tid)
     for (int i = 0; i < count; i++){
