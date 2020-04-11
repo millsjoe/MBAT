@@ -10,12 +10,12 @@ fun main(args: Array<String>) {
     Surface(array)
     val initial = Cell(array).randomCell()
 
-    val playingBoard = Diffuse(array,initial,counter)
+    val playingBoard = Diffuse(array,initial,counter.toInt())
 
-    val theArray: String = gson.toJson(Model(playingBoard.finalArray))
+    val theArray: String = gson.toJson(Model(playingBoard.surface))
 
-
-    File("../Python/Kotlin.json").writeText((theArray))
+    val fileToWriteTo = "../JSON/Kotlin_" + arraySize + ".json"
+    File(fileToWriteTo).writeText((theArray))
 
 
 }

@@ -1,5 +1,5 @@
 @Suppress("NAME_SHADOWING")
-class Diffuse(private val surface: Array<IntArray>, initialCell: Pair<Int,Int>, counterLimit: Int) {
+class Diffuse( val surface: Array<IntArray>, initialCell: Pair<Int,Int>, counterLimit: Int) {
 
     private val cellClass = Cell(surface)
     private val counterLimit = counterLimit
