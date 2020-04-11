@@ -6,7 +6,7 @@ import sys
 import json
 
 inputsize = int(sys.argv[1])
-counterLimit = int(sys.argv[2])
+counterLimit = (inputsize*0.4) * (inputsize*0.1)
 
 matrix = np.zeros((inputsize, inputsize))
 
