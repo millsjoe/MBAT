@@ -115,7 +115,7 @@ void initialiseStartingCell( int arrayBoard[SIZE][SIZE]){
 
 bool diffuse(int x, int y, int arrayBoard[SIZE][SIZE], int count ){
 
-        if (count > 50000){
+        if (count > 4000){
             return false;
         }
         if (checkDiffused(arrayBoard,x,y)){
