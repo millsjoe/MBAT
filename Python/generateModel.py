@@ -44,8 +44,6 @@ def plotFractal():
             json_data = json.load(json_file)
             fractalCalc(json_data['modelArray'])
 
-    print(occupied)
-
     logRadius=np.log(model_arrays)
     logMass=np.log(occupied)
 
@@ -53,16 +51,20 @@ def plotFractal():
     fitLog=np.polyfit(logRadius, logMass,1)
     fitLogFunc=np.poly1d(fitLog)
 
-    num=str(np.round(fitLog[0],3))
+    num= np.round(fitLog[0],2)
 
-    print(num)
+    errorMargin = np.round(((num - 1.70)/1.70) * 100, 2)
+    fig = plt.figure()
+    fig.text(0.4,0.2,"Fractal dimension: " + str(num))
+    fig.text(0.4,0.165,"DLA Estimate: 1.70~")
+    fig.text(0.4,0.135,"Error of calculated dimension: " + str(errorMargin) + "%")
+
     plt.scatter(logRadius,logMass, color='red')
     plt.plot(logRadius, fitLogFunc(logRadius),color='blue')
-    plt.title("Mass vs Radius (log to log) " + num)
+    plt.title("Mass vs Radius (log to log) ")
     plt.xlabel("Log radius")
     plt.ylabel("Log mass")
-    plt.grid(True)
-    # plt.show()
+    plt.show()
 
 option = sys.argv[1]
 language = sys.argv[2]
@@ -80,6 +82,5 @@ elif (option == "--model"):
     fileToOpen = "../JSON/" + language + "_" + str(num) + ".json"
     with open(fileToOpen) as json_file:
             json_data = json.load(json_file)
-
             visualise(json_data['modelArray'],num)
 
