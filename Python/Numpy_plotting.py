@@ -53,12 +53,10 @@ arrayIterations = []
 foundCount = 0
 while(foundCount < counterLimit):
     matrix,foundCell,foundCount = Diffuse(matrix,foundCount)
-    if foundCell:
-        arrayIterations.append(matrix.tolist())
-
+    
 jsonDict = {}
-jsonDict['modelArray'] = arrayIterations
+jsonDict['modelArray'] = matrix.tolist()
 
-f = open("Python.json", "w")
+f = open("../JSON/Python_{}.json".format(inputsize), "w")
 f.write(json.dumps(jsonDict))
 f.close()
