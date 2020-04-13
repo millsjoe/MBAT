@@ -12,7 +12,7 @@ data_range = numpy.arange(start,end,increment)
 languageToUse = {
     "Python" : "python3 ../Python/Numpy_plotting.py ",
     "C" : "../C/parallel ",
-    "Kotlin" : "../Kotlin/gradlew run --args "
+    "Kotlin" : "../Kotlin/gradlew -p ../Kotlin/ run --args "
 }
 
 for i in data_range:
