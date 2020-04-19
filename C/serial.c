@@ -9,12 +9,31 @@
 
 int SIZE;
 
+void appendResults(float time){
+    FILE *fp;
+    fp = fopen("../Results/C_Serial_results.csv", "a+");
+    fprintf(fp,"CS,%d,%.5f\n",SIZE,time);
+
+}
 
 void printArray(int arrayBoard[SIZE][SIZE]){
 
-    FILE *fp;
+    int number = SIZE;
+    int digits = 0;
+    while (number > 0) {
+        number = number/10;
+        digits++;
+    }
 
-    fp = fopen("../MBAT/Python/C.json", "w+");
+    FILE *fp;
+    char* location = "../JSON/";
+    char* name = "CS_"; 
+    char* extension = ".json";
+    char filetouse[strlen(location)+strlen(name)+strlen(extension)+digits+1];
+
+    snprintf( filetouse, sizeof( filetouse ), "%s%s%d%s", location, name, SIZE, extension );
+    fp = fopen(filetouse, "w+");
+
 
 
     fprintf(fp,"{\n\"modelArray\" : [\n");
@@ -154,9 +173,9 @@ bool diffuse(int x, int y, int arrayBoard[SIZE][SIZE], int count ){
 int main(int argc, char* argv[]) {
 
     SIZE = atoi(argv[1]); // take user input convert to int
-    int count = atoi(argv[2]);
+    int count = (SIZE*0.4) * (SIZE*0.1);
 
-
+    clock_t begin = clock();
     int (*arrayBoard)[SIZE];
     arrayBoard = malloc(sizeof(int[SIZE][SIZE]));
     memset(arrayBoard, 0, SIZE * SIZE); // create an array initialise with zeros
@@ -181,7 +200,12 @@ int main(int argc, char* argv[]) {
         }
     }
 
+    clock_t end = clock();
+    double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+
     printArray(arrayBoard);
+    appendResults(time_spent);
+
     free(arrayBoard);
 
     return 0;

@@ -10,6 +10,12 @@
 
 int SIZE;
 
+void appendResults(float time){
+    FILE *fp;
+    fp = fopen("../Results/C_Parallel_results.csv", "a+");
+    fprintf(fp,"CP,%d,%.5f\n",SIZE,time);
+
+}
 
 void printArray(int arrayBoard[SIZE][SIZE]){
 
@@ -22,7 +28,7 @@ void printArray(int arrayBoard[SIZE][SIZE]){
 
     FILE *fp;
     char* location = "../JSON/";
-    char* name = "C_"; 
+    char* name = "CP_"; 
     char* extension = ".json";
     char filetouse[strlen(location)+strlen(name)+strlen(extension)+digits+1];
 
@@ -200,13 +206,14 @@ int main(int argc, char* argv[]) {
         y = genNum();
         if (!diffuse(x,y,arrayBoard,0))
             i = i-1;
-//        printf("x: %d y: %d thread: %d \n", x,y,tid); // This checks to see if the multithreading works as expected 
+    //    printf("x: %d y: %d thread: %d \n", x,y,tid); // This checks to see if the multithreading works as expected 
     }
 
     double time_spent = omp_get_wtime() - begin;
-    printf("%f\n", time_spent);
+    // printf("%f\n", time_spent);
 
     printArray(arrayBoard);
+    appendResults(time_spent);
     free(arrayBoard);
 
     return 0;
