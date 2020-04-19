@@ -44,26 +44,27 @@ def plotFractal():
             json_data = json.load(json_file)
             fractalCalc(json_data['modelArray'])
 
-    logRadius=np.log(model_arrays)
+    logSize=np.log(model_arrays)
     logMass=np.log(occupied)
 
+
+
     #Fit a log function using numpy polyfit
-    fitLog=np.polyfit(logRadius, logMass,1)
+    fitLog=np.polyfit(logSize, logMass,1)
     fitLogFunc=np.poly1d(fitLog)
+    fracdim= np.round(fitLog[0],3)
 
-    num= np.round(fitLog[0],2)
-
-    errorMargin = np.round(((num - 1.70)/1.70) * 100, 2)
+    errorMargin = np.round(((fracdim - 1.70)/1.70) * 100, 2)
     fig = plt.figure()
-    fig.text(0.4,0.2,"Fractal dimension: " + str(num))
-    fig.text(0.4,0.165,"DLA Estimate: 1.70~")
+    fig.text(0.4,0.2,"Fractal dimension: " + str(fracdim))
+    fig.text(0.4,0.165,"DLA Estimate: ≅1.70")
     fig.text(0.4,0.135,"Error of calculated dimension: " + str(errorMargin) + "%")
 
-    plt.scatter(logRadius,logMass, color='red')
-    plt.plot(logRadius, fitLogFunc(logRadius),color='blue')
-    plt.title("Mass vs Radius (log to log) ")
+    plt.scatter(logSize,logMass, color='red')
+    plt.plot(logSize, fitLogFunc(logSize),color='blue')
     plt.xlabel("Log radius")
     plt.ylabel("Log mass")
+    plt.title("Mass vs Radius (log to log) \nLanguage: " + language)
     plt.show()
 
 option = sys.argv[1]
