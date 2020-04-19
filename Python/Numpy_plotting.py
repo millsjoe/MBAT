@@ -4,9 +4,12 @@ import random
 import math
 import sys
 import json
+import time
 
 inputsize = int(sys.argv[1])
 counterLimit = (inputsize*0.4) * (inputsize*0.1)
+
+beginTime = time.time()
 
 matrix = np.zeros((inputsize, inputsize))
 
@@ -45,17 +48,22 @@ def Diffuse(matrix, foundCount):
         matrix[location[0]][location[1]] = 1
         foundCount += 1
 
-    return (matrix, foundCell,foundCount)
+    return (matrix, foundCount)
 
 images = []
 
 arrayIterations = []
 foundCount = 0
 while(foundCount < counterLimit):
-    matrix,foundCell,foundCount = Diffuse(matrix,foundCount)
+    matrix,foundCount = Diffuse(matrix,foundCount)
     
 jsonDict = {}
 jsonDict['modelArray'] = matrix.tolist()
+
+time_taken = time.time() - beginTime
+
+result = open("../Results/Python_results.csv", "a+")
+result.write("Python,{},{:.5f}\n".format(inputsize, time_taken))
 
 f = open("../JSON/Python_{}.json".format(inputsize), "w")
 f.write(json.dumps(jsonDict))
