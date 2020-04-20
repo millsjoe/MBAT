@@ -30,6 +30,10 @@ filetoUse = {
     "Kotlin" : "../Results/Kotlin_results.csv"
 }
 
+if ( "--no-python" in sys.argv):
+    languageToUse.pop("Python")
+    filetoUse.pop("Python")
+
 def cleanup():
     os.system("rm ../Results/*.csv")
 def runprog(language):
