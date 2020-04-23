@@ -7,7 +7,7 @@ import json
 import time
 
 inputsize = int(sys.argv[1])
-counterLimit = (inputsize*0.4) * (inputsize*0.1)
+counterLimit = (inputsize*0.2) * (inputsize*0.2)
 
 beginTime = time.time()
 

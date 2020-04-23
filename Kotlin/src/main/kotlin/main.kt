@@ -4,7 +4,7 @@ import java.io.File
 
 fun main(args: Array<String>) {
     val arraySize = args[0].toInt()
-    val counter = (arraySize*0.4) * (arraySize*0.1)
+    val counter = (arraySize*0.2) * (arraySize*0.2)
 
     val gson = Gson()
     val array = Array(arraySize) { IntArray(arraySize) }

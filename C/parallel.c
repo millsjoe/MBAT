@@ -178,7 +178,7 @@ bool diffuse(int x, int y, int arrayBoard[SIZE][SIZE], int count ){
 int main(int argc, char* argv[]) {
 
     SIZE = atoi(argv[1]); // take user input convert to int
-    int count = (SIZE*0.4) * (SIZE*0.1);
+    int count = (SIZE*0.2) * (SIZE*0.2);
     int (*arrayBoard)[SIZE];
 
     double begin = omp_get_wtime();
