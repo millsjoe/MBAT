@@ -15,7 +15,7 @@ bigDict = {}
 
 languagesdict = {}
     
-
+# which programs to use
 languageToUse = {
     "Python" : "python3 ../Python/Numpy_plotting.py ",
     "CP" : "../C/parallel ",
@@ -23,6 +23,7 @@ languageToUse = {
     "Kotlin" : "../Kotlin/gradlew -p ../Kotlin/ run --args "
 }
 
+# which performance results to use
 filetoUse = {
     "Python" : "../Results/Python_results.csv",
     "CP" : "../Results/C_Parallel_results.csv",
@@ -30,16 +31,21 @@ filetoUse = {
     "Kotlin" : "../Results/Kotlin_results.csv"
 }
 
+# allow no-python option for optimum speed
 if ( "--no-python" in sys.argv):
     languageToUse.pop("Python")
     filetoUse.pop("Python")
 
+# cleanup csv files before beginning
 def cleanup():
     os.system("rm ../Results/*.csv")
+
+# run each script required
 def runprog(language):
     for i in data_range:
         os.system(languageToUse[language] + str(i) + " > /dev/null")
 
+# initialise the final language dict
 def initialiseDict(language):
    
     fileUsing = open(filetoUse[language], "r")
@@ -47,7 +53,8 @@ def initialiseDict(language):
     for row in csv_reader:
         bigDict[row[1]] = []
     languagesdict[language] = {}
-        
+
+#  calculate the average for each language and add it to dict        
 def averageResults(language, landict):
     fileUsing = open(filetoUse[language], "r")
     csv_reader = csv.reader(fileUsing, delimiter=",")
@@ -61,7 +68,7 @@ def averageResults(language, landict):
     
     
 
-
+# output dict contents to csv file
 def sendTofinalResults(dictToUse):
 
     filename = "../Results/results.csv"
@@ -89,7 +96,7 @@ def sendTofinalResults(dictToUse):
 
 cleanup()
 
-
+# call on all functions to run 
 for language in languageToUse:
     
     for run in range(num_runs):

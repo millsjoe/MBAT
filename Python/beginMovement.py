@@ -3,7 +3,20 @@ import random
 
 
 def beginMovement(location, matrix,size):
+    """
+    Checks for neighbours to see if close to boundary or diffused. 
+    If not will return the new location to walk to.
 
+    param location: Current location of cell
+    param matrix:   The environment to use
+    param size:     The size of environment (eg 100x100)
+
+    return location:    New location 
+    return foundcell:   If it has diffused
+    return nearedge:    If too close to boundary
+    return end:         Instruction to end this iteration
+    """
+    
     foundCell = False
     nearEdge = False
     end = False

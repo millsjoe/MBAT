@@ -21,7 +21,11 @@ randomY = math.ceil(randomY)
 
 matrix[randomX][randomY] = 1
 
-def Diffuse(matrix, foundCount):
+    """ 
+    Main diffusion occurs here. Intended to be completed in an iterative style
+    param matrix:       Current state of the environment
+    param foundCount:   Number of found cells
+    """
     startRandomX = random.randint(1,inputsize - 1)
     startRandomY = random.randint(1,inputsize - 1)
 
@@ -41,6 +45,7 @@ def Diffuse(matrix, foundCount):
     while (foundCell == False and nearEdge == False):
         location,foundCell, nearEdge, end = beginMovement(location,matrix,inputsize)
         counter += 1
+        # allow for 400000 walks - should be more than enough
         if (counter == 400000 or end == True):
             break
 
@@ -50,6 +55,7 @@ def Diffuse(matrix, foundCount):
 
     return (matrix, foundCount)
 
+# use if wish to create a gif
 images = []
 
 arrayIterations = []
@@ -60,11 +66,14 @@ while(foundCount < counterLimit):
 jsonDict = {}
 jsonDict['modelArray'] = matrix.tolist()
 
+# calculate time to run
 time_taken = time.time() - beginTime
 
+# log performance
 result = open("../Results/Python_results.csv", "a+")
 result.write("Python,{},{:.5f}\n".format(inputsize, time_taken))
 
+# create json file of model
 f = open("../JSON/Python_{}.json".format(inputsize), "w")
 f.write(json.dumps(jsonDict))
 f.close()

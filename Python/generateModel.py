@@ -11,7 +11,7 @@ images = []
 model_arrays = []
 occupied = []
 
-
+# generate a model and save it in image format
 def visualise(modelArray, num):
     modelArray = np.array(modelArray, ndmin=2)
     plt.title("DLA")
@@ -21,7 +21,7 @@ def visualise(modelArray, num):
     images.append(imageio.imread("{}_images/cluster_{}.png".format(language,num)))
 
     
-
+# add each size and mass of model to global dict
 def fractalCalc(modelArray):
     modelArray = np.array(modelArray)
     num_ones = (modelArray == 1).sum()
@@ -34,7 +34,7 @@ def fractalCalc(modelArray):
     occupied.append(num_ones)
     
     
-
+# plot the fractal dimension
 def plotFractal():
 
 
@@ -44,22 +44,24 @@ def plotFractal():
             json_data = json.load(json_file)
             fractalCalc(json_data['modelArray'])
 
-    logSize=np.log(model_arrays)
-    logMass=np.log(occupied)
+    logSize = np.log(model_arrays)
+    logMass = np.log(occupied)
 
 
 
-    #Fit a log function using numpy polyfit
-    fitLog=np.polyfit(logSize, logMass,1)
-    fitLogFunc=np.poly1d(fitLog)
-    fracdim= np.round(fitLog[0],3)
+    # fit a log function using numpy polyfit
+    fitLog = np.polyfit(logSize, logMass,1)
+    fitLogFunc = np.poly1d(fitLog)
+    fracdim = np.round(fitLog[0],3)
 
+    # determine error margin compared to DLA
     errorMargin = np.round(((fracdim - 1.70)/1.70) * 100, 2)
     fig = plt.figure()
     fig.text(0.4,0.2,"Fractal dimension: " + str(fracdim))
     fig.text(0.4,0.165,"DLA Estimate: ≅1.70")
     fig.text(0.4,0.135,"Error of calculated dimension: " + str(errorMargin) + "%")
 
+    # visualise on a plot
     plt.scatter(logSize,logMass, color='red')
     plt.plot(logSize, fitLogFunc(logSize),color='blue')
     plt.xlabel("Log radius")
@@ -67,10 +69,11 @@ def plotFractal():
     plt.title("Mass vs Radius (log to log) \nLanguage: " + language)
     plt.show()
 
+# user inputs
 option = sys.argv[1]
 language = sys.argv[2]
 
-
+# use for generating fractal dimension
 if (option == "--fractal"):
     start = int(sys.argv[3])
     end = int(sys.argv[4])
@@ -78,6 +81,7 @@ if (option == "--fractal"):
     files = np.arange(start,end,increment)
     plotFractal()
 
+# use for saving specific models
 elif (option == "--model"):
     num = int(sys.argv[3])
     fileToOpen = "../JSON/" + language + "_" + str(num) + ".json"
