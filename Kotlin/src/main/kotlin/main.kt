@@ -2,6 +2,14 @@ import kotlin.Array as Array
 import com.google.gson.Gson
 import java.io.File
 
+/**
+ * 
+ *   Main takes the environment size and calls on other classes
+ *   to begin the application 
+ *   
+ *   @param args Command line arguments
+ */
+
 fun main(args: Array<String>) {
     val arraySize = args[0].toInt()
     val counter = (arraySize*0.2) * (arraySize*0.2)
@@ -18,7 +26,7 @@ fun main(args: Array<String>) {
     
     val endTime = System.currentTimeMillis()
     val difference = (endTime - startTime) 
-    val timeTaken = difference.toFloat() / 1000
+    val timeTaken = difference.toFloat() / 1000 // Change to seconds
 
     val theArray: String = gson.toJson(Model(playingBoard.surface))
 
