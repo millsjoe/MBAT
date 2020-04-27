@@ -10,6 +10,7 @@
 
 int SIZE;
 
+// Print results to csv file
 void appendResults(float time){
     FILE *fp;
     fp = fopen("../Results/C_Parallel_results.csv", "a+");
@@ -17,6 +18,7 @@ void appendResults(float time){
 
 }
 
+// Output matrix to json file
 void printArray(int arrayBoard[SIZE][SIZE]){
 
     int number = SIZE;
@@ -32,7 +34,7 @@ void printArray(int arrayBoard[SIZE][SIZE]){
     char* extension = ".json";
     char filetouse[strlen(location)+strlen(name)+strlen(extension)+digits+1];
 
-    snprintf( filetouse, sizeof( filetouse ), "%s%s%d%s", location, name, SIZE, extension );
+    snprintf( filetouse, sizeof( filetouse ), "%s%s%d%s", location, name, SIZE, extension ); // Allows dynamic file naming
     fp = fopen(filetouse, "w+");
 
 
@@ -60,6 +62,8 @@ void printArray(int arrayBoard[SIZE][SIZE]){
     fclose(fp);
 }
 
+// Used for debugging purposes and small arrays
+// Prints the entire array
 void checkArray(int arrayBoard[SIZE][SIZE]) {
     for (int i = 0; i < SIZE; i++) {
         printf("[");
@@ -80,6 +84,7 @@ void checkArray(int arrayBoard[SIZE][SIZE]) {
     }
 }
 
+// Detemrine if too close to border or on an already diffused cell
 bool checkBorder(int arrayBoard[SIZE][SIZE], int locationX, int locationY){
 
     bool toReturn = false;
@@ -95,6 +100,7 @@ bool checkBorder(int arrayBoard[SIZE][SIZE], int locationX, int locationY){
     return toReturn;
 }
 
+// Check if cell has completed diffusion
 bool checkDiffused(int arrayBoard[SIZE][SIZE], int locationX, int locationY){
 
     bool toReturn = false;
@@ -108,6 +114,7 @@ bool checkDiffused(int arrayBoard[SIZE][SIZE], int locationX, int locationY){
     return toReturn;
 }
 
+// Create border of cell
 void createBorder(int arrayBoard[SIZE][SIZE]){
 
 
@@ -119,24 +126,27 @@ void createBorder(int arrayBoard[SIZE][SIZE]){
     }
 
 }
-
+ // Generate a pseudo-random number
 int genNum(){
     return (rand() % (SIZE-2) - 2 + 1 ) + 2; // minus 2 to allow for the border
 }
 
+// Place first cell in the middle
 void initialiseStartingCell( int arrayBoard[SIZE][SIZE]){
     float middle = SIZE/2;
     int startingPoint = (int)middle - 1 ;
 
     arrayBoard[startingPoint][startingPoint] = 1;
 }
-
+ // Diffuse in a recursive matter. Will return if exceeding the recursion counter
 bool diffuse(int x, int y, int arrayBoard[SIZE][SIZE], int count ){
 
+        // Recursion counter
         if (count > 4000){
             return false;
         }
         if (checkDiffused(arrayBoard,x,y)){
+            // Only allow one thread to make changes on shared memory
             #pragma omp critical 
             {
                 arrayBoard[x][y] = 1;
@@ -150,7 +160,7 @@ bool diffuse(int x, int y, int arrayBoard[SIZE][SIZE], int count ){
         }
         else{
             int decider = (rand() % 4 - 1 + 1) + 1;
-
+            // Move to next random location
             switch(decider){
                 case 1 :
                     x = x - 1;
@@ -198,7 +208,7 @@ int main(int argc, char* argv[]) {
 
     initialiseStartingCell(arrayBoard);
     int tid;
-    #pragma omp parallel for private(x, y, tid)
+    #pragma omp parallel for private(x, y, tid) // diffuse in parallel with private locations per thread
     for (int i = 0; i < count; i++){
 
         tid = omp_get_thread_num();
