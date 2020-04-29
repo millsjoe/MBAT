@@ -3,7 +3,7 @@ Final year project: Modelling Bacteria &amp; Tumours
 
 3 Applications are available to run which generate JSON files to model Diffusion-Limited Aggregration (DLA). These applications are developed in Python, Kotlin & C. A serial and parallel version are available in C. 
 
-The output of all applications is a JSON file in `../JSON/` and a CSV of results in `../Results`
+The output of all applications is a JSON file in `../JSON/` and a CSV of results in `../Results/`
 ## Python 
 ### Dependencies
 In order to run in Python you must have Python 3.6+, pip3 and the relevant pip modules. `requirements.txt` contains the modules required and can be installed by:
