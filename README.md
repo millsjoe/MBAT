@@ -76,3 +76,11 @@ $ python3 run_results.py {range_start} {range_end} {increment} {num_runs}
 e.g $ python3 run_results.py 10 100 10 5 
 ```
 The average results can be found `./Results/results.csv` in format `size,python,cp,cs,kotlin`
+
+# Images
+#### N = 200
+![Kotlin](Python/Kotlin_images/cluster_200.png)
+#### N = 475
+![C](Python/C_images/cluster_475.png)
+#### N = 100
+![Python](Python/Python_images/cluster_100.png)
