@@ -20,7 +20,7 @@ randomY = (inputsize/2) + random.randint(0,1)
 randomY = math.ceil(randomY)
 
 matrix[randomX][randomY] = 1
-
+def Diffuse(matrix, foundCount):
     """ 
     Main diffusion occurs here. Intended to be completed in an iterative style
     param matrix:       Current state of the environment
